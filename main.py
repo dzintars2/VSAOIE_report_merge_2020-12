@@ -182,7 +182,7 @@ class SocialApp():
                     data2.append(j)
 
         if len(data2) == 0:
-            messagebox.showerror("Kļūda", "Atskaites par 2021.gada janvāri netika atrasti dati ko apstrādāt")
+            messagebox.showerror("Kļūda", "Atskaites par 2021.gada janvāri netika atrasti dati ko apstrādāt!")
             return False
         for i in root:
             if str(i.tag) == 'Tab4':
@@ -191,8 +191,14 @@ class SocialApp():
         tree = ElementTree(root)
         file_name = filedialog.asksaveasfilename(confirmoverwrite=False, title = "Saglabāt failu",
 						filetypes = (("XML datne","*.xml"),("Visi faili","*.*")))
-        tree.write(file_name, encoding="UTF-8")
-        messagebox.showinfo("Informācija", "Atskaites apvienotas veiksmīgi")
+        if file_name == "":
+            messagebox.showerror("Kļūda", "Faila nosaukums netika norādīts!")
+            return False
+        try:
+            tree.write(file_name, encoding="UTF-8")
+            messagebox.showinfo("Informācija", "Atskaites apvienotas veiksmīgi!")
+        except:
+            messagebox.showerror("Kļūda", "Apvienoto failu izveidot neizdevās!")
 
         
 
