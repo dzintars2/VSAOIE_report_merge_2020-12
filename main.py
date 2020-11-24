@@ -24,7 +24,7 @@ class SocialApp():
         lbl.grid(column=1, row=0, padx=5, pady=5)
         self.lbl = Label(self.window, 
 	    				text="VSAOI XML 2020.decembris: ", padx=5)
-        self.lbl.grid(column=0, row=1)
+        self.lbl.grid(column=0, row=1, padx=5, pady=5)
         self.lbl_file1 = Label(self.window, 
 	    				text="Fails nav izvēlēts", 
 	    				borderwidth=1,
@@ -36,10 +36,10 @@ class SocialApp():
 	    	 			justify="left", 
 	    	 			anchor="w",
 	    				fg="RED")
-        self.lbl_file1.grid(column=1, row=1)
+        self.lbl_file1.grid(column=1, row=1, padx=5, pady=5)
         self.lbl = Label(self.window, 
 	    				text="VSAOI XML 2021.janvāris: ", padx=5)
-        self.lbl.grid(column=0, row=2)
+        self.lbl.grid(column=0, row=2, padx=5, pady=5)
         self.lbl_file2 = Label(self.window, 
 	    				text="Fails nav izvēlēts", 
 	    				borderwidth=1,
@@ -51,22 +51,22 @@ class SocialApp():
 	    	 			justify="left", 
 	    	 			anchor="w",
 	    				fg="RED")
-        self.lbl_file2.grid(column=1, row=2)
+        self.lbl_file2.grid(column=1, row=2, padx=5, pady=5)
         btn_file1= Button(self.window, 
 	    				text="Izvēlēties failu", 
 	    				command=self.selectFile1, 
 	    				width=17)
-        btn_file1.grid(column=2, row=1)
+        btn_file1.grid(column=2, row=1, padx=5, pady=5)
         btn_file2 = Button(self.window, 
 	    				text="Izvēlēties failu", 
 	    				command=self.selectFile2, 
 	    				width=17)
-        btn_file2.grid(column=2, row=2)
+        btn_file2.grid(column=2, row=2, padx=5, pady=5)
         btn_file3 = Button(self.window, 
 	    				text="Apstrādāt", 
 	    				command=self.mergeData, 
 	    				width=17)
-        btn_file3.grid(column=2, row=3)
+        btn_file3.grid(column=2, row=3, padx=5, pady=5)
         zoom = 0.2
         image = Image.open("logo.png")
         pixels_x, pixels_y = tuple([int(zoom * x)  for x in image.size])
@@ -75,7 +75,8 @@ class SocialApp():
         panel.grid(column=0, row=0)
         self.lbl = Label(self.window, 
 	    				text="Autors: AI Finance SIA, e-pasts: info@aktivs.lv", padx=5)
-        self.lbl.grid(column=1, row=4)
+        self.lbl.grid(column=1, row=4, padx=5, pady=5)
+        self.window.resizable(False, False)
         self.window.mainloop()
 
     def selectFile1(self):
@@ -168,6 +169,7 @@ class SocialApp():
         for i in root2:
             if str(i.tag)[:3] == 'Tab':
                 for j in i:
+                    hasDarbaVeids = False
                     for z in j:
                         if str(z.tag) in ['Ienakumi','Iemaksas']:
                             #print(z.tag, z.text)
@@ -179,6 +181,13 @@ class SocialApp():
                             z.text = '0'
                         if str(z.tag) == 'RiskaNodevasPazime':
                             z.text = 'false'
+                        if str(z.tag) == 'DarbaVeids':
+                            hasDarbaVeids = True
+                            z.text = 'G'
+                    if hasDarbaVeids == False:
+                        new = ET.Element('DarbaVeids')
+                        new.text = 'G'
+                        j.append(new)
                     data2.append(j)
 
         if len(data2) == 0:
