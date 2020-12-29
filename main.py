@@ -183,10 +183,10 @@ class SocialApp():
                             z.text = 'false'
                         if str(z.tag) == 'DarbaVeids':
                             hasDarbaVeids = True
-                            z.text = 'G'
+                            z.text = 'V'
                     if hasDarbaVeids == False:
                         new = ET.Element('DarbaVeids')
-                        new.text = 'G'
+                        new.text = 'V'
                         j.append(new)
                     data2.append(j)
 
